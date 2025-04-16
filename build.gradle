@@ -1,0 +1,59 @@
+buildscript {
+    // 配置仓库信息
+    repositories {
+        // 阿里云仓库
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        mavenLocal()
+        mavenCentral()
+    }
+}
+
+allprojects {
+    // 指定插件
+    apply plugin: 'java'
+    apply plugin: 'idea'
+
+    // 配置项目信息
+    group = 'cn.nap'
+    version = '1.0.0'
+
+    // 配置仓库信息
+    repositories {
+        mavenLocal()
+        // 阿里云仓库
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        // 阿里云效私有仓库
+        maven {
+            url 'https://packages.aliyun.com/maven/repository/2299258-release-3aG2rY'
+            credentials {
+                username 'aRzOHP'
+                password 'k8UQB8aERO'
+            }
+        }
+        mavenCentral()
+    }
+}
+
+subprojects {
+    // 指定编译版本
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+    // 指定编码格式
+    compileJava {
+        options.encoding = 'UTF-8'
+    }
+
+    // 指定依赖版本
+    ext {
+        lombokVersion = '1.18.30'
+    }
+
+    // 配置公共子依赖
+    dependencies {
+        // lombok
+        compileOnly("org.projectlombok:lombok:${lombokVersion}")
+        annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+        testCompileOnly("org.projectlombok:lombok:${lombokVersion}")
+        testAnnotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+    }
+}

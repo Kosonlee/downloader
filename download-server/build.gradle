@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.3'
+    id 'io.spring.dependency-management' version '1.1.4'
+}
+
+dependencies {
+    implementation('org.springframework.boot:spring-boot-starter-web') {
+        // 排除tomcat容器，使用undertow
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+        // 排除spring-boot-starter-logging依赖，去掉logback，使用log4j2
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+    implementation 'org.springframework.boot:spring-boot-starter-undertow'
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+
+    // swagger
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0'
+
+    // common项目
+    implementation "cn.nap:download-common:${project.version}"
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        // 排除tomcat容器，使用undertow
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+        // 排除spring-boot-starter-logging依赖，去掉logback，使用log4j2
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+clean {
+    delete "${projectDir}/build"
+    delete "${projectDir}/out"
+    delete "${projectDir}/target"
+    delete "${projectDir}/logs"
+}

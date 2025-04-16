@@ -1,0 +1,5 @@
+rootProject.name = 'nap-downloader'
+include ':download-server'
+include ':download-client'
+include ':download-common'
+

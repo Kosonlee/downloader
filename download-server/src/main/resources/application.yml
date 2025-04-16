@@ -1,0 +1,16 @@
+server:
+  port: 3030
+
+# swagger路径：http://localhost:3030/swagger-ui/index.html
+springdoc:
+  # 生产环境需要关闭这2个参数
+  api-docs:
+    # 是否开启OpenApi，如果为false，则SwaggerUI也会被禁用
+    enabled: true
+  swagger-ui:
+    # 是否开启SwaggerUI，依赖OpenApi的开启
+    enabled: true
+
+downloader:
+  # 下载文件的存储目录
+  dir: downloads

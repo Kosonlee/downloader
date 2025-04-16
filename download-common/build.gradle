@@ -1,0 +1,52 @@
+plugins {
+    id 'java'
+    id 'java-library'
+    id 'maven-publish'
+}
+
+ext {
+    fastjson2Version = '2.0.47'
+}
+
+dependencies {
+    // fastjson2
+    implementation "com.alibaba.fastjson2:fastjson2:${fastjson2Version}"
+
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+publishing {
+    publications {
+        publish(MavenPublication) {
+            groupId project.group
+            artifactId project.name
+            version project.version
+            from components.java
+        }
+    }
+
+    repositories {
+        maven {
+            // 阿里云效私有仓库
+            def releasesRepoUrl = 'https://packages.aliyun.com/maven/repository/2299258-release-3aG2rY'
+            def snapshotsRepoUrl = 'https://packages.aliyun.com/maven/repository/2299258-snapshot-SVKAbw'
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            // 认证用户和密码
+            credentials {
+                username 'aRzOHP'
+                password 'k8UQB8aERO'
+            }
+        }
+    }
+}
+
+clean {
+    delete "${projectDir}/build"
+    delete "${projectDir}/out"
+    delete "${projectDir}/target"
+}
